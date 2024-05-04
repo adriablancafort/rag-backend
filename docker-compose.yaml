@@ -1,0 +1,24 @@
+version: '3.6'
+services:
+  iris:
+    image: intersystemsdc/iris-community:latest
+    environment:
+      IRIS_USERNAME: demo
+      IRIS_PASSWORD: demo
+    restart: always
+    hostname: iris
+    container_name: iris
+    ports:
+      - 1972:1972
+      - 52773:52773
+
+  fastapi:
+    hostname: fastapi
+    container_name: fastapi
+    build: .
+    ports:
+      - 8888:8000
+    depends_on:
+      - iris
+    environment:
+      IRIS_HOSTNAME: iris
